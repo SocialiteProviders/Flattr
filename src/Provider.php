@@ -12,7 +12,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://flattr.com/oauth/authorize', $state);
+        return $this->buildAuthUrlFromBase(
+            'https://flattr.com/oauth/authorize', $state
+        );
     }
 
     /**
@@ -28,7 +30,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://api.flattr.com/rest/v2/user', [
+        $response = $this->getHttpClient()->get(
+            'https://api.flattr.com/rest/v2/user', [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
             ],
@@ -43,11 +46,9 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => $user['id'],
-            'nickname' => $user['username'],
-            'name'     => $user['firstname'].' '.$user['lastname'],
-            'email'    => null,
-            'avatar'   => $user['avatar'],
+            'id' => $user['id'], 'nickname' => $user['username'],
+            'name' => $user['firstname'].' '.$user['lastname'], 'email' => null,
+            'avatar' => $user['avatar'],
         ]);
     }
 
@@ -56,6 +57,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenFields($code)
     {
-        return array_merge(parent::getTokenFields($code), ['grant_type' => 'authorization_code']);
+        return array_merge(parent::getTokenFields($code), [
+            'grant_type' => 'authorization_code',
+        ]);
     }
 }
