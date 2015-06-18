@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\Flattr;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;
